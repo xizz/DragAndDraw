@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 
 public class BoxDrawingView extends View {
 	private static final String TAG = "BoxDrawingView";
+	private static final String ARG_STATE = "state";
+	private static final String ARG_BOXES = "boxes";
 
 	private Box mCurrentBox;
 	private ArrayList<Box> mBoxes = new ArrayList<>();
@@ -25,12 +29,29 @@ public class BoxDrawingView extends View {
 
 	public BoxDrawingView(Context context, AttributeSet attributeSet) {
 		super(context, attributeSet);
-
+		Log.d(TAG, "constructor called");
 		mBoxPaint = new Paint();
 		mBoxPaint.setColor(0x22ff0000);
 
 		mBackgroundPaint = new Paint();
 		mBackgroundPaint.setColor(0xfff8efe0);
+	}
+
+	@Override
+	protected Parcelable onSaveInstanceState() {
+		Log.d(TAG, "onSaveInstanceState()");
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(ARG_BOXES, mBoxes);
+		bundle.putParcelable(ARG_STATE, super.onSaveInstanceState());
+		return bundle;
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state) {
+		Log.d(TAG, "onRestoreInstanceState()");
+		Bundle args = (Bundle) state;
+		mBoxes = (ArrayList<Box>) args.getSerializable(ARG_BOXES);
+		super.onRestoreInstanceState(args.getParcelable(ARG_STATE));
 	}
 
 	@Override
