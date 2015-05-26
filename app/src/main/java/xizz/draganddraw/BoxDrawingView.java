@@ -3,7 +3,6 @@ package xizz.draganddraw;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -71,7 +70,7 @@ public class BoxDrawingView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		PointF curr = new PointF(event.getX(), event.getY());
+		Box.PointF curr = new Box.PointF(event.getX(), event.getY());
 
 		Log.d(TAG, "onTouchEvent() x=" + curr.x + " y=" + curr.y);
 
@@ -95,6 +94,12 @@ public class BoxDrawingView extends View {
 			case MotionEvent.ACTION_CANCEL:
 				Log.d(TAG, "ACTION_ CANCEL");
 				mCurrentBox = null;
+				break;
+			case MotionEvent.ACTION_POINTER_DOWN:
+				Log.d(TAG, "ACTION_POINTER_DOWN");
+				break;
+			case MotionEvent.ACTION_POINTER_UP:
+				Log.d(TAG, "ACTION_POINTER_UP");
 				break;
 		}
 

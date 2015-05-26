@@ -1,8 +1,8 @@
 package xizz.draganddraw;
 
-import android.graphics.PointF;
+import java.io.Serializable;
 
-public class Box {
+public class Box implements Serializable {
 	private PointF mOrigin;
 	private PointF mCurrent;
 
@@ -21,4 +21,11 @@ public class Box {
 	public PointF getOrigin() {
 		return mOrigin;
 	}
+
+	public static class PointF extends android.graphics.PointF implements Serializable {
+		public PointF(float x, float y) {
+			super(x, y);
+		}
+	}
 }
+
